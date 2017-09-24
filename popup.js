@@ -47,11 +47,11 @@ function getCurrentTabUrl(callback) {
   // alert(url); // Shows "undefined", because chrome.tabs.query is async.
 }
 
-
+var LS_NAME = "copy-list"
 function loadListfromLocalStorage(){
-		var ls = localStorage.getItem("copy-list");
+		var ls = localStorage.getItem(LS_NAME);
 		ls = JSON.parse(ls);
-		console.log(ls);
+		//console.log(ls);
 		if(ls==null){
 			return;
 		}
@@ -62,8 +62,37 @@ function loadListfromLocalStorage(){
 			list = list + '<br><button class="copy" id="' + key + '">Copy</button><input type="input" class="input-text" id="input-'+key+'"value="'+ ls[key]+'"/><button class="delete-'+ key +'" >Delete</button><br>';
 		}
 		divelem.innerHTML = list;
+};
+
+function addToLocalStorage(){
+  var ls = localStorage.getItem(LS_NAME);
+  var key = document.getElementById("key").value;
+  var value = document.getElementById("value").value;
+  if(key=="" || value==""){
+    alert("Empty key/value not allowed!")
+  }
+
+  if(ls!=null){
+    ls = JSON.parse(ls);
+  }else{
+    ls = {}
+  }
+  ls[key] = value;
+  //console.log(ls);
+  ls = JSON.stringify(ls);
+  localStorage.setItem(LS_NAME, ls);
+  loadListfromLocalStorage();  
+};
+
+function renderSaveHTML(){
+  return  '<input id="key" placeholder="Type key here"/><br>' + 
+          '<input id="value" placeholder="Type value here"><br>' + 
+          '<button id="save" onClick="addToLocalStorage()">Save</button> <button id="cancel">Cancel</button>';
 }
 
+function addHTML(){
+  return '<button class="btn" id="add">Add</button> ';
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   getCurrentTabUrl((url) => {
@@ -72,21 +101,35 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	var copyBtn = document.querySelector('.copy');
 	//var saveBtn = document.getElementsByClassName();
-	copyBtn.addEventListener('click', function(event) {
-	  var id = this.id;
-	  var inputelem = document.getElementById("input-"+id);
-	  inputelem.select();
+	if(copyBtn){
+    copyBtn.addEventListener('click', function(event) {
+      var id = this.id;
+      var inputelem = document.getElementById("input-"+id);
+      inputelem.select();
 
-	  try {
-	    var successful = document.execCommand('copy');
-	    var msg = successful ? 'successful' : 'unsuccessful';
-	    console.log('Copying text command was ' + msg);
-	  } catch (err) {
-		console.log('Oops, unable to copy');
-	  }
-	});
-	
-	
-	
+      try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        console.log('Copying text command was ' + msg);
+      } catch (err) {
+      console.log('Oops, unable to copy');
+      }
+    });
+  }
+  
+  var addBtn = document.getElementById("add");  
+  if(addBtn){
+    addBtn.addEventListener("click", function(event){
+      var elem = document.getElementById("add-area");
+      elem.innerHTML = renderSaveHTML();
+      if(key==="" || value===""){
+        alert("Empty key/value not allowed!");
+        return;
+      }
+    });
+  }
+  
+  var saveBtn = document.getElementById("save");
+  
   });
 });
