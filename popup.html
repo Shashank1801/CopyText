@@ -19,13 +19,18 @@
       font-size: 15px;
     }
 
+    .hide{
+      display: none;
+    }
+
     #link-store {
       align-items: center;
       display: flex;
       justify-content: space-between;
     }
   </style>
-  <script src="popup.js"></script>
+<script src="jquery-3.2.1.min.js"></script>
+<script src="popup.js"></script>
 </head>
 
 <body>
@@ -36,7 +41,12 @@
   </div>
   <hr>
   <div id="add-area">
-    <button class="btn" id="add">Add</button>
+    <button  id="add">Add</button>
+  </div>
+  <div class="hide" id="save-area">
+      <input id="key" placeholder="Type key here"/><br>
+      <input id="value" placeholder="Type value here"><br>
+      <button id="save" onclick="">Save</button> <button id="cancel">Cancel</button>
   </div>
 </body>
 
