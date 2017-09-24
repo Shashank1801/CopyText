@@ -16,8 +16,11 @@ function loadListfromLocalStorage() {
 };
 
 function addToLocalStorage() {
-  var key = document.getElementById("key");
-  var value = document.getElementById("value");
+  var key = document.getElementById("key").value;
+  var value = document.getElementById("value").value;
+  if(key=="" || value==""){
+    return;
+  }
   var ls = localStorage.getItem(LS_NAME);
   if (ls != null) {
     ls = JSON.parse(ls);
@@ -28,7 +31,9 @@ function addToLocalStorage() {
   //console.log(ls);
   ls = JSON.stringify(ls);
   localStorage.setItem(LS_NAME, ls);
-
+  $("#add-area").show();
+  $("#save-area").hide();
+  loadListfromLocalStorage();
 };
 
 function renderSaveHTML() {
@@ -41,37 +46,17 @@ function addHTML() {
   return '<button class="btn" id="add">Add</button> ';
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+
+$(document).ready(function () {
   loadListfromLocalStorage();
+  
+  $("#add").click(function () {
+    $("#add-area").hide();
+    $("#save-area").show();
+  });
 
-  var copyBtn = document.querySelector('.copy');
-  if (copyBtn) {
-    copyBtn.addEventListener('click', function (event) {
-      var id = this.id;
-      var inputelem = document.getElementById("input-" + id);
-      inputelem.select();
-
-      try {
-        var successful = document.execCommand('copy');
-        var msg = successful ? 'successful' : 'unsuccessful';
-        console.log('Copying text command was ' + msg);
-      } catch (err) {
-        console.log('Oops, unable to copy');
-      }
-    });
-  };
-
-  var addBtn = document.getElementById("add");
-  if (addBtn) {
-    addBtn.addEventListener("click", function (event) {
-      var elem = document.getElementById("add-area");
-      elem.innerHTML = renderSaveHTML();
-      if (key === "" || value === "") {
-        alert("Empty key/value not allowed!");
-        return;
-      }
-      addToLocalStorage(key, value);
-      loadListfromLocalStorage();
-    });
-  };
+  $("#save").click(function () {
+    addToLocalStorage();
+    
+  });
 });
