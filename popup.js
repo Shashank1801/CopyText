@@ -13,6 +13,9 @@ function loadListfromLocalStorage() {
     list = list + '<br><button class="copy" id="' + key + '">Copy</button><input type="input" class="input-text" id="input-' + key + '"value="' + ls[key] + '"/><button class="delete-' + key + '" >Delete</button><br>';
   }
   divelem.innerHTML = list;
+  $("#key").val("");
+  $("#value").val("");
+
 };
 
 function addToLocalStorage() {
