@@ -8,13 +8,35 @@ function loadListfromLocalStorage() {
   }
   var i;
   var divelem = document.getElementById("text-list");
+  if(divelem==null){
+    return;
+  }
   var list = "";
   for (var key in ls) {
-    list = list + '<br><button class="copy" id="' + key + '">Copy</button><input type="input" class="input-text" id="input-' + key + '"value="' + ls[key] + '"/><button class="delete-' + key + '" >Delete</button><br>';
+    // list = list + '<br><button class="copy" id="' + key + '">Copy</button><input type="input" class="input-text" id="input-' + key + '"value="' + ls[key] + '"/><button class="delete-' + key + '" >Delete</button><br>';
+    list = list + '<div class="row"><div class="col-lg-6"><div class="input-group entries">' + 
+                  '<span class="input-group-btn"><button class="btn btn-secondary" type="button" id="copy-' + key + '"><i class="fa fa-copy"></i></button></span>' + 
+                  '<input readonly="true" type="text" class="form-control" value="' + ls[key] + '" id="input-'+ key +'">'+
+                  '<span class="input-group-btn"><button class="btn btn-secondary" type="button" id="edit-' + key + '"><i class="fa fa-edit"></i></button></span>' + 
+                  '</div></div></div>';
+    
+    var copyKeyId = "#copy-"+key;
+    var editKeyId = "#edit-"+key;
+
+    $(copyKeyId).click(function(){
+      console.log("copy clicked for id" + copyKeyId);
+    });
+
+    $(editKeyId).click(function(){
+      console.log("copy clicked for id" + editKeyId);
+    });
   }
   divelem.innerHTML = list;
   $("#key").val("");
   $("#value").val("");
+
+  // add event listeners for the copy and save buttons
+
 
 };
 
@@ -53,7 +75,11 @@ function addHTML() {
 $(document).ready(function () {
   loadListfromLocalStorage();
   
+  // will be hidden when DOM loads
+  $("#save-area").hide();
+
   $("#add").click(function () {
+    // console.log("add button clicked")
     $("#add-area").hide();
     $("#save-area").show();
   });

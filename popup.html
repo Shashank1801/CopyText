@@ -1,53 +1,81 @@
 <!doctype html>
 <!--
- This page is shown when the extension button is clicked, because the
- "browser_action" field in manifest.json contains the "default_popup" key with
- value "popup.html".
- -->
+   This page is shown when the extension button is clicked, because the
+   "browser_action" field in manifest.json contains the "default_popup" key with
+   value "popup.html".
+   -->
 <html>
-
-<head>
-  <title>Link Saver</title>
-  <style type="text/css">
-    body {
-      margin: 10px;
-      white-space: nowrap;
-      width: 400px;
-    }
-
-    h1 {
-      font-size: 15px;
-    }
-
-    .hide{
-      display: none;
-    }
-
-    #link-store {
-      align-items: center;
-      display: flex;
-      justify-content: space-between;
-    }
-  </style>
-<script src="jquery-3.2.1.min.js"></script>
-<script src="popup.js"></script>
-</head>
-
-<body>
-  <h5>Link Saver</h5>
-  </div>
-  <hr>
-  <div id="text-list">
-  </div>
-  <hr>
-  <div id="add-area">
-    <button  id="add">Add</button>
-  </div>
-  <div class="hide" id="save-area">
-      <input id="key" placeholder="Type key here"/><br>
-      <input id="value" placeholder="Type value here"><br>
-      <button id="save">Save</button> <button id="cancel">Cancel</button>
-  </div>
-</body>
-
+   <head>
+      <title>Link Saver</title>
+      <style type="text/css">
+         body {
+         margin: 10px;
+         white-space: nowrap;
+         width: 400px;
+         }
+         h1 {
+         font-size: 15px;
+         }
+         .hide {
+         display: none;
+         }
+         #link-store {
+         align-items: center;
+         display: flex;
+         justify-content: space-between;
+         }
+         .entries{
+           padding: 2px;
+         }
+      </style>
+      <script src="jquery-3.2.1.min.js"></script>
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
+      <!-- Optional theme -->
+      <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+      <script src="popup.js"></script>
+   </head>
+   <body class="container">
+      <h2>Link Saver</h2>
+      <!-- links here -->
+      <div class="panel panel-info" >
+         <div class="panel-body" id="text-list">
+            <div class="row">
+               <div class="col-lg-6">
+                  <div class="input-group entries">
+                     <span class="input-group-btn">
+                     <button class="btn btn-secondary" type="button">
+                     <i class="fa fa-copy"></i></button>
+                     </span>
+                     <input disabled type="text" class="form-control" placeholder="Search for...">
+                     <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button">
+                          <i class="fa fa-edit"></i>
+                        </button>
+                      </span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- footer -->
+      <!-- Add button area -->
+      <div id="add-area" class="row">
+         <button id="add" class="btn btn-default center-block">Add</button>
+      </div>
+      <!-- New item area -->
+      <div id="save-area">
+         <div class="form-group row">
+            <input type="text" placeholder="Type key here" class="form-control col-xs-10" id="key">
+         </div>
+         <div class="form-group row">
+            <input type="text" placeholder="Type value to be saved" class="form-control pull-right" id="value">
+         </div>
+         <button id="save" class="btn btn-success pull-left">Save</button>
+         <button id="cancel" class="btn btn-warning pull-right">Cancel</button>
+      </div>
+   </body>
 </html>
